@@ -1,0 +1,35 @@
+{{!-- <div class="border-card">
+  <h3 class="mb-4">Add you resume</h3>
+  {{input class="input-text mb-3" value=resumeLink}}
+  <button class="button-solid" onclick={{submit}}>Apply for Job</button>
+</div> --}}
+<div class="my-3">
+
+  <h3 class="col-12">Application Form</h3>
+  
+  {{#form-for response  submit=(action "saveForm") as |f|}}
+    {{#each form as |formField|}}
+      {{#if (eq formField.type "text-field")}}
+        <div class="form-group col-12 my-2">
+          {{f.text-field formField.name label=formField.title required=formField.required}}
+          {{!-- <small class="form-text text-muted">{{formField.title}}</small> --}}
+        </div>
+      {{else if (eq formField.type "radio-group")}}
+        <div class="form-group col-12 my-2">
+          {{f.radio-group propertyName=formField.name label=formField.title options=(split formField.options) required=formField.required}}
+          {{!-- <small class="form-text text-muted">{{formField.title}}</small> --}}
+        </div>
+      {{/if}}
+    {{/each}}
+    <div class="form-group col-12 my-2">
+      {{input type="checkbox" checked=terms}} I agree that all the information provided are correct to the best of my knowledge.
+    </div>
+
+    {{#if terms}}
+      <div class="form-group col-12 my-2">
+        {{f.reset "Clear form" classNames="button-solid"}}
+        {{f.submit "Apply" classNames="button-solid"}}
+      </div>
+    {{/if}}
+  {{/form-for}}
+</div>
